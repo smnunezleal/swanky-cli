@@ -1,5 +1,5 @@
 import { execaCommand } from "execa";
-import { copy, emptyDir, ensureDir, readJSON } from "fs-extra/esm";
+import { copy, emptyDir, ensureDir, readJSON, remove } from "fs-extra/esm";
 import path from "node:path";
 import { DEFAULT_NETWORK_URL, ARTIFACTS_PATH, TYPED_CONTRACTS_PATH } from "./consts.js";
 import { SwankyConfig } from "../types/index.js";
@@ -119,4 +119,19 @@ export async function generateTypes(contractName: string) {
   await execaCommand(
     `npx typechain-polkadot --in ${relativeInputPath} --out ${relativeOutputPath}`
   );
+}
+
+// Function to remove directory if it exists
+export async function removeDirIfExists(path: string): Promise<void> {
+  try {
+    await remove(path);
+    console.info(`Removed ${path}`);
+  } catch (error) {
+    if (error.code !== 'ENOENT') {
+      console.error(`Error clearing ${path}: ${error}`);
+      throw error;
+    } else {
+      console.warn(`${path} does not exist, skipping...`);
+    }
+  }
 }

@@ -5,3 +5,7 @@ export const DEFAULT_SHIBUYA_NETWORK_URL = "wss://shibuya.public.blastapi.io";
 
 export const ARTIFACTS_PATH = "artifacts";
 export const TYPED_CONTRACTS_PATH = "typedContracts";
+
+export const BUILD_PATH = "";
+export const TEST_PATH = "";
+export const CARGO_PATH = "";
